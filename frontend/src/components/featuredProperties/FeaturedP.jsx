@@ -8,8 +8,7 @@ import useFecth from '../../CostumHook/useFetch';
 function FeaturedP(props) {
 
     const {data,error,loading}= useFecth("/api/hotel?limit=4")
-    console.log("data.hotels")
-    console.log(data)
+    
     return (
 
         <div className='fp'>

@@ -9,7 +9,7 @@ import paris from '../../images/paris2.jpg'
 function Featured(props) {
 
     const {data,error,loading}= useFecth("/api/hotel/countByCity?cities=dublin,marrakech,paris")
-    console.log(data)
+   
 
     return (
         <div className='featured'>

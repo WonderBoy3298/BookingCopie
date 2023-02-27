@@ -97,4 +97,6 @@ const updateRoom = async(req,res,next)=>{
 
 
 
+
+
 module.exports = {getAllRooms,createRoom,deleteRoom,updateRoom}

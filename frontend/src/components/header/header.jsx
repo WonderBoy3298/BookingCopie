@@ -11,8 +11,8 @@ import { SearchContext } from '../../context/SearchContext';
 import { AuthContext } from '../../context/AuthContext';
 function Header(props) {
 
-    const {user} = useContext(AuthContext)
-    console.log(`user ${user}`)
+    const {user}=useContext(AuthContext)
+
     const [opendate,setOpendate] = useState(false)
     const [Destination,setDestination] = useState("")
     const [date, setDate] = useState([
@@ -57,12 +57,12 @@ function Header(props) {
                     </div>
 
                 </div>
-                {props.type!="list" &&<>
+                {props.type!="list" && <>
                 <h1 className='headerTitle'>A lifetime of discounts? It's Genius.</h1>
                 <p className='headerDesc'>Get rewarded for your travels unlock instant saving of 10%  or more with 
                     a free booking
                 </p>
-                 {!user && <button className='headerBtn'>Sign in / Register </button>}
+                  {!user && <button className='headerBtn'>Sign in / Register </button>}
                  <div className="headerSearch">
                     <div className='headerSearchItem'>
                         

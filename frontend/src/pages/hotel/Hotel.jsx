@@ -1,31 +1,30 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { faBed, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/header';
 import MailList from '../../components/mailList/MailList';
 import Navbar from '../../components/navbar/Navbar';
 import useFecth from '../../CostumHook/useFetch';
-
+import { AuthContext } from '../../context/AuthContext';
 
 
 import './Hotel.css'
 import { SearchContext } from '../../context/SearchContext';
+import Reserve from '../../components/Reserve/Reserve';
 function Hotel(props) {
   const location = useLocation()
-  
   const itemId = location.pathname
   const id = itemId.split("/")
-  console.log(id[2])
   const {data,error,loading}= useFecth(`/api/hotel/find/${id[2]}`)  
-  console.log(data)
+  
   
 
   const {city,date} = useContext(SearchContext) 
-  console.log(date[0].endDate)
+  
 
  const MilPerDay = 1000*60*60*24
   function diffDays(date1,date2){
@@ -36,7 +35,9 @@ function Hotel(props) {
   }
 
 const days = (diffDays(date[0].endDate,date[0].startDate))
-  
+
+const [reserve,setReserve] = useState(false)
+
 const photos = [
         {
           src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -57,7 +58,18 @@ const photos = [
           src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
         },
       ];
-    
+      const navigate = useNavigate()
+      const {user}=useContext(AuthContext)
+      const handleClick = (e)=>{
+        e.preventDefault()
+        if(user){
+          setReserve(true)
+          console.log(reserve)
+        }else{
+          navigate('/login') 
+
+        }
+      }
       
     return (
         <div>
@@ -65,7 +77,7 @@ const photos = [
           <Header type="list"/>
           <div className="hotelContainer">
             <div className="hotelWrapper">
-                    <button className='bookNow'>Reserve or Book Now </button>
+                    <button className='bookNow' onClick={handleClick}>Reserve or Book Now </button> 
                     <h1 > {data.name} </h1> 
                     <div className='hotelAdress'>
                        
@@ -100,7 +112,7 @@ const photos = [
                         <h2>
                             <b>{days*data.cheapestPrice} $</b><span> {days} nights</span>
                         </h2>
-                        <button>Reserve or Book Now!</button>
+                        <button onClick={handleClick}>Reserve or Book Now!</button>
 
                     </div>    
                 </div>
@@ -113,6 +125,9 @@ const photos = [
           </div>
         <MailList/>
         <Footer/>
+
+        {reserve && <Reserve setopen={setReserve} hotelId={id[2]} />}
+
         </div>
         
     );

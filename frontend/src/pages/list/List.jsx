@@ -22,7 +22,7 @@ function List(props) {
 
     
     const {data,error,loading,reFetch}= useFecth(`/api/hotel?city=${Destination}&min=${min||1}&max=${max||9999}`)
-    console.log(data)
+   
 
     const handleSearch2 = ()=>{
         reFetch()

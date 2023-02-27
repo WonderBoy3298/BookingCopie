@@ -11,7 +11,7 @@ import useFecth from '../../CostumHook/useFetch';
 
 function Home(props) {
     const {data,error,loading}= useFecth(`/api/hotel`)  
-    console.log(data)
+    
     return (
 
         <div>
